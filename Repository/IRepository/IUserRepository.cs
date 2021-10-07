@@ -10,6 +10,8 @@ namespace XtraBlogApi.Repository.IRepository
     {
         public Task<List<User>> Users();
 
+        public Task<bool> User(string email, string password);
+
         public Task<bool> DeleteUser(int id);
 
         public Task<bool> UpdateUser(User User);

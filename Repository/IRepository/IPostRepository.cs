@@ -8,7 +8,7 @@ namespace XtraBlogApi.Repository.IRepository
 {
     public interface IPostRepository
     {
-        public Task<List<Post>> Posts();
+        public Task<List<PostCategories>> Posts();
 
         public Task<bool> DeletePost(int id);
 

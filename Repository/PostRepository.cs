@@ -8,7 +8,7 @@ using XtraBlogApi.Repository.IRepository;
 
 namespace XtraBlogApi.Repository
 {
-    public class PostRepository: IPostRepository
+    public class PostRepository : IPostRepository
     {
         private DataContext Context;
 
@@ -17,11 +17,21 @@ namespace XtraBlogApi.Repository
             Context = con;
         }
 
-        public async Task<List<Post>> Posts()
+        public async Task<List<PostCategories>> Posts()
         {
             try
             {
-                return await Context.Posts.ToListAsync();
+                List<PostCategories> pcs = new List<PostCategories>();
+                (await Context.Posts.Include(x => x.PostCategories).Include(x=>x.PostComments).ToListAsync()).ForEach(post=>
+                {
+                    pcs.Add(new PostCategories
+                    {
+                        Post = post,
+                        Categories = Context.Categories.Where(x => post.PostCategories.Select(y => y.IdCategory).Contains(x.Id)).ToList()
+                    });
+                });
+
+                return pcs;
             }
             catch (Exception ex)
             {

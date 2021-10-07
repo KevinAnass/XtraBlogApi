@@ -30,7 +30,7 @@ namespace XtraBlogApi.Controllers
         #region GET
 
         [HttpGet("Posts")]
-        public async Task<List<Post>> Posts()
+        public async Task<List<PostCategories>> Posts()
         {
             return await Post.Posts();
         }
@@ -51,6 +51,12 @@ namespace XtraBlogApi.Controllers
         public async Task<List<User>> Users()
         {
             return await User.Users();
+        }
+
+        [HttpGet("User")]
+        public async Task<bool> Users([FromQuery] string email, [FromQuery] string password)
+        {
+            return await User.User(email, password);
         }
 
 
